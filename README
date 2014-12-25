@@ -1,0 +1,37 @@
+********************************************************************************
+			Project 		  :	Count occurrence of inputed String's in given file
+			Description :	This project intends to read and analyze the content of a file. 
+                 The file contains any number of well-formed HTTP headers in the 
+                 format [Field:Value]. The objective of the the code is to
+                 determine the number of times a set of field headers (provided 
+                 at compile time) appear in the file.
+			Author			:	Apoorv Bhargava
+			Email				:	apoorvbh@usc.edu
+********************************************************************************
+
+Execution Instructions:
+***********************
+=> Please follow the below steps to execute the functionality.
+	
+ Step-1: Populate the sample file with Field:Value
+					Example: 
+      <file start>
+      Field1:Value1
+      Field2:Value2
+      Field1:Value3
+      Field2:Value22
+      Field3:Value4
+      <file end>
+
+	Step-2: Compile the code
+					# make
+
+	Step-3: Execute the code				
+				# ./matchHeaders <filename> <NumberOfTrackedFields> [Field1] [Field2] .. [Fieldi]
+
+	Step 4: Cleaning the executables and output files.
+					# make clean
+
+Assumptions :
+--------------------
+

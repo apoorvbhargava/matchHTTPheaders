@@ -1,0 +1,24 @@
+For this exercise, please write a program in C that reads and analyzes the content of a file. The file in question contains any number of well-formed HTTP headers (rfc 2616) and their values in canonical form. Your program needs to read this file and determine the number of times a set of headers (chosen at compile time) occurs in the file.
+
+For example, if your program tracked the 'Connection', 'Accept', and 'Content-Length' headers, and is run against the following file:
+
+<file start>
+Content-Length: 10
+User-Agent: Test
+Content-Length: 14
+Accept: comedy
+Content-Length: 100
+Content-Encoding: gzip
+Connection: close
+User-Agent: Test
+Accept: flash
+User-Agent: Test1
+Content-Length: 20
+User-Agent: Test2
+User-Agent: Test3
+Accept: gzip
+<file end>
+
+it should indicate that Content-length was seen 4 times, Accept 3 times, etc. As a matter of practice, we recommend that your program try to match all the headers that a browser might be interested in.
+
+The program does not need to do anything with the header value. Also, when thinking about this solution, please optimize for the CPU, meaning that it's okay to take extra memory if you can find a good algorithm to reduce the processing.
