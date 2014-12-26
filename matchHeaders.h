@@ -34,7 +34,7 @@
 *               takes extra memory to reduce the processing.
 */
 
-#include <stdio.h>
+#pragma once
 
 /* Include standard Library and other header files */
 
@@ -42,3 +42,15 @@
 #include <unistd.h> 
 #include <stdlib.h> 
 #include <string.h>
+
+/* Structure - To Manage HTTP header fields */
+struct manageFields{
+ unsigned int total;
+ unsigned int length;
+ unsigned int count;
+ struct manageFields *prev;
+ struct manageFields *next;
+};
+
+/*	Function usage - Prints the usage instructions */
+void usage(char* errorMessage);
