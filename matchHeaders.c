@@ -48,10 +48,23 @@ void usage(char* errorMessage){
  printf("\t[Fields]::  HTTP header field names\n");
 };
 
+unsigned int alphaValue(char alphabet){
+ if(alphabet >= 65 && alphabet <= 90){
+  return (alphabet-64);
+ }else if(alphabet >= 97 && alphabet <= 122){
+  return (alphabet-96);
+ }else{
+  return alphabet;
+ }
+}
+
 int main(int argc, const char* argv[]){
  unsigned int numFields = 0;
  FILE *filePointer;
  char *buffer = NULL;
+ unsigned int counter = 0, icounter = 0, fieldTotal = 0, fieldLength = 0 ;
+ unsigned int fieldCounter;
+ const char *bufferPointer;
  
  /* Verify Command-Line Arguments -- Start */
  if(argc < 4){
@@ -106,10 +119,52 @@ int main(int argc, const char* argv[]){
  }
  fclose(filePointer);
  
+ /* Read Field Name from Command-Line Arguments -- Start */
+ 
+ //struct field *fields = (struct field*) malloc(numFields * sizeof(struct field));
+ for(counter=0; counter < numFields; counter++){
+  fieldCounter = 0;
+  bufferPointer = buffer;
+  
+  /* Check if the field exists */
+  if(argv[3+counter] == NULL) {
+   usage("\tError:: Number of valid Field Names do not match NumberOfTrackedFields value. \n");
+   return 0;
+  }
+  
+  while((bufferPointer=strstr(bufferPointer,argv[3+counter])) != NULL){
+   bufferPointer += strlen(argv[3+counter]);
+   fieldCounter++;
+  }
+  printf("%s was seen %d times.\n",argv[3+counter], fieldCounter);
+  
+  /* Iterate through each character of the field and calculate length and ascii total */
+  
+ /* fieldTotal = 0;
+  fieldLength = 0;
+  while(argv[3+counter][fieldLength] != '\0'){
+   fieldTotal += alphaValue(argv[3+counter][fieldLength]);
+   fieldLength++;
+  }
+  fields[counter].total = fieldTotal;
+  fields[counter].length = fieldLength;
+  fields[counter].count = 0;
+  printf("%s == \t%d\t%d\n",argv[3+counter], fieldTotal, fieldLength);
+  //printf("%s\n",argv[3+counter]);*/
+ }
+ 
+ 
+ /* Read Field Name from Command-Line Arguments -- End */
+ 
+ 
  /* Buffer the file content -- End */
+ //struct *headerField headerField = (struct window*) malloc(count * sizeof(struct window));
+ //struct 
+ //processFields(buffer);
  
  //printf("Hello World %s\n", argv[0]);
  //printf("%s",buffer);
+ //free(fields);
  free(buffer);
  return 0;
 }

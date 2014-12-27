@@ -44,13 +44,14 @@
 #include <string.h>
 
 /* Structure - To Manage HTTP header fields */
-struct manageFields{
+struct field{
  unsigned int total;
  unsigned int length;
  unsigned int count;
- struct manageFields *prev;
- struct manageFields *next;
 };
 
 /*	Function usage - Prints the usage instructions */
 void usage(char* errorMessage);
+
+/*	Function alphaValue - Gets normalized integer value of alphabets */
+unsigned int alphaValue(char alphabet);
