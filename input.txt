@@ -4,8 +4,8 @@ Content-Length: 14
 Accept: comedy
 Content-Length: 100
 Content-Encoding: gzip
-Connection: close
-User-Agent: Test
+Connection  : close Connection
+User-Agent: test
 Accept: flash
 User-Agent: Test1
 Content-Length: 20
