@@ -1,7 +1,7 @@
 all: matchHeaders
 
 matchHeaders:matchHeaders.c
-	cc -o matchHeaders matchHeaders.c -Wall
+	cc -g -o matchHeaders matchHeaders.c -Wall
 
 clean: 
-	rm matchHeaders *.out
+	rm matchHeaders

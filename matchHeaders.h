@@ -42,16 +42,13 @@
 #include <unistd.h> 
 #include <stdlib.h> 
 #include <string.h>
+#include <ctype.h>
 
-/* Structure - To Manage HTTP header fields */
-struct field{
- unsigned int total;
- unsigned int length;
- unsigned int count;
-};
 
+#define FIXED_ARGUMENTS 3
+#define MIN_ARGUMENTS 4
 /*	Function usage - Prints the usage instructions */
 void usage(char* errorMessage);
 
-/*	Function alphaValue - Gets normalized integer value of alphabets */
-unsigned int alphaValue(char alphabet);
+/*	Function stristr - Find case insensitive substring in the given string */
+const char *stristr(const char *string, const char *substring);

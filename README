@@ -27,14 +27,16 @@ Execution Instructions:
 					# make
 
 	Step-3: Execute the code				
-				# ./matchHeaders <filename> <NumberOfTrackedFields> [Field1] [Field2] .. [Fieldi]
+				# ./matchHeaders <filename> <NumberOfTrackedFields N> <[Field 1] [Field 2] .. [Field N]>
 
 	Step 4: Cleaning the executables and output files.
 					# make clean
 
 Assumptions :
 --------------------
+* A valid Header Field in the supplied file should be either preceded by space, 
+  new line or terminator character and should end by ':'
 
-Sample : 
---------------------
-./matchHeaders input  66 Accept Accept-Charset Accept-Encoding Accept-Language Accept-Datetime Authorization Cache-Control Connection Cookie Content-Length Content-MD5 Content-Type Date Expect From Host If-Match If-Modified-Since If-None-Match If-Range If-Unmodified-Since Max-Forwards Origin Pragma Proxy-Authorization Range Referer User-Agent Upgrade Warning Via Access-Control-Allow-Origin Accept-Patch Accept-Ranges Age Allow Cache-Control Content-Encoding Content-Language Content-Length Content-Location Content-Disposition Content-Range Content-Type ETag Expires Last-Modified Link Location P3P Pragma Proxy-Authenticate Refresh Retry-After Server Set-Cookie Status Strict-Transport-Security Trailer Transfer-Encoding Upgrade Vary Warning WWW-Authenticate X-Frame-Options Public-Key-Pins
+Sample: Input File Name: input.txt
+-------------------------------
+./matchHeaders input.txt 66 Accept Accept-Charset Accept-Encoding Accept-Language Accept-Datetime Authorization Cache-Control Connection Cookie Content-Length Content-MD5 Content-Type Date Expect From Host If-Match If-Modified-Since If-None-Match If-Range If-Unmodified-Since Max-Forwards Origin Pragma Proxy-Authorization Range Referer User-Agent Upgrade Warning Via Access-Control-Allow-Origin Accept-Patch Accept-Ranges Age Allow Cache-Control Content-Encoding Content-Language Content-Length Content-Location Content-Disposition Content-Range Content-Type ETag Expires Last-Modified Link Location P3P Pragma Proxy-Authenticate Refresh Retry-After Server Set-Cookie Status Strict-Transport-Security Trailer Transfer-Encoding Upgrade Vary Warning WWW-Authenticate X-Frame-Options Public-Key-Pins

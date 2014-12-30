@@ -42,32 +42,50 @@ void usage(char* errorMessage){
   printf("%s\n",errorMessage);
  }
  printf("Please use the following command to execute the Program::\n");
- printf("\t./matchHeaders <filename> <NumberOfTrackedFields> [Field1] [Field2] .. [Fieldi]\n");
+ printf("\t./matchHeaders <filename> <NumberOfTrackedFields N> ");
+ printf("<[Field 1] [Field 2] .. [Field N]>\n");
  printf("\tfilename:: File Name which contains the well-formed HTTP headers\n");
- printf("\tNumberOfTrackedFields:: Number of HTTP header fields tracked\n");
+ printf("\tNumberOfTrackedFields:: Number N of HTTP header fields tracked\n");
  printf("\t[Fields]::  HTTP header field names\n");
 };
 
-unsigned int alphaValue(char alphabet){
- if(alphabet >= 65 && alphabet <= 90){
-  return (alphabet-64);
- }else if(alphabet >= 97 && alphabet <= 122){
-  return (alphabet-96);
- }else{
-  return alphabet;
+/*	Function stristr - Find case insensitive substring in the given string */
+
+const char *stristr(const char *string, const char *substring){
+ const char *stringLooper, *substringLooper;
+ if(!*substring){
+  /* Empty substring */
+  return string;
  }
+ 
+ while(*string){
+  if(toupper(*string) == toupper(*substring)){
+   for(stringLooper = string, substringLooper = substring; 
+       *stringLooper && *substringLooper; ++stringLooper, ++substringLooper){
+       
+       if(toupper(*stringLooper) != toupper(*substringLooper)){
+        break;
+       }
+   }
+   if(!*substringLooper){
+    return string;
+   }
+  }
+  ++string;
+ }
+ return 0;
 }
 
 int main(int argc, const char* argv[]){
  unsigned int numFields = 0;
  FILE *filePointer;
  char *buffer = NULL;
- unsigned int counter = 0, icounter = 0, fieldTotal = 0, fieldLength = 0 ;
+ unsigned int counter = 0,flag = 0;
  unsigned int fieldCounter;
  const char *bufferPointer;
  
  /* Verify Command-Line Arguments -- Start */
- if(argc < 4){
+ if(argc < MIN_ARGUMENTS){
   usage("");
   return 0;
  }
@@ -119,52 +137,56 @@ int main(int argc, const char* argv[]){
  }
  fclose(filePointer);
  
- /* Read Field Name from Command-Line Arguments -- Start */
- 
- //struct field *fields = (struct field*) malloc(numFields * sizeof(struct field));
+ /* Read Field Name from Command-Line Arguments and search in Buffer -- Start */
+
  for(counter=0; counter < numFields; counter++){
+  /* Re-Initializing the counter and the buffer pointer */
   fieldCounter = 0;
   bufferPointer = buffer;
   
   /* Check if the field exists */
-  if(argv[3+counter] == NULL) {
+  if(argv[FIXED_ARGUMENTS+counter] == NULL) {
    usage("\tError:: Number of valid Field Names do not match NumberOfTrackedFields value. \n");
    return 0;
   }
   
-  while((bufferPointer=strstr(bufferPointer,argv[3+counter])) != NULL){
-   bufferPointer += strlen(argv[3+counter]);
-   fieldCounter++;
+  /* Count the number of occurrences of each Header Field */ 
+  while((bufferPointer=stristr(bufferPointer,argv[FIXED_ARGUMENTS+counter]))
+           != NULL){
+   flag = 0;
+   
+   /* 
+      Valid Header Field should be either preceded by space, 
+      new line or terminator character 
+   */
+   
+   if(*(bufferPointer-1) == '\n' || *(bufferPointer-1) == ' ' 
+      || *(bufferPointer-1) == '\0'){
+    flag = 1;
+   }
+   
+   /* Moving buffer Pointer ahead as per the header field length */
+   bufferPointer += strlen(argv[FIXED_ARGUMENTS+counter]);
+   
+   /* Escaping trailing spaces before the header field end by ':' */
+   if(*(bufferPointer) == ' '){
+    while(*(bufferPointer) == ' '){
+     ++bufferPointer;
+    }
+   }
+   
+   /* Valid Header field must be followed by ':' */
+   if(flag == 1 && *(bufferPointer) == ':'){
+    fieldCounter++;
+   }
+   
   }
-  printf("%s was seen %d times.\n",argv[3+counter], fieldCounter);
   
-  /* Iterate through each character of the field and calculate length and ascii total */
-  
- /* fieldTotal = 0;
-  fieldLength = 0;
-  while(argv[3+counter][fieldLength] != '\0'){
-   fieldTotal += alphaValue(argv[3+counter][fieldLength]);
-   fieldLength++;
-  }
-  fields[counter].total = fieldTotal;
-  fields[counter].length = fieldLength;
-  fields[counter].count = 0;
-  printf("%s == \t%d\t%d\n",argv[3+counter], fieldTotal, fieldLength);
-  //printf("%s\n",argv[3+counter]);*/
+  /* Output the result for that Header Field */
+  printf("%s was seen %d times.\n",argv[FIXED_ARGUMENTS+counter], fieldCounter);
  }
+ /* Read Field Name from Command-Line Arguments and search in Buffer -- End */
  
- 
- /* Read Field Name from Command-Line Arguments -- End */
- 
- 
- /* Buffer the file content -- End */
- //struct *headerField headerField = (struct window*) malloc(count * sizeof(struct window));
- //struct 
- //processFields(buffer);
- 
- //printf("Hello World %s\n", argv[0]);
- //printf("%s",buffer);
- //free(fields);
  free(buffer);
  return 0;
 }
